@@ -227,3 +227,44 @@ function updateEmployeeRole() {
     });
 }
 
+// Function to update an employee's manager
+function updateEmployeeManager() {
+    // Fetch all employees to choose which one to update
+    db.query('SELECT id, first_name, last_name FROM employees', (err, employees) => {
+        if (err) {
+            console.error('Error fetching employees: ' + err.message);
+            return mainMenu();
+        }
+        const employeeChoices = employees.map(emp => ({
+            name: `${emp.first_name} ${emp.last_name}`,
+            value: emp.id
+        }));
+
+        // Prompt user to choose an employee to update their manager
+        inquirer.prompt([
+            {
+                type: 'list',
+                name: 'employeeId',
+                message: 'Select the employee whose manager you want to update:',
+                choices: employeeChoices
+            },
+            {
+                type: 'list',
+                name: 'managerId',
+                message: 'Select the new manager for the employee:',
+                choices: employeeChoices.filter(emp => emp.value !== employeeId)
+            }
+        ]).then(answers => {
+            // Update the manager in the database
+            const query = 'UPDATE employees SET manager_id = ? WHERE id = ?';
+            db.query(query, [answers.managerId, answers.employeeId], (err, result) => {
+                if (err) {
+                    console.error('Error updating employee\'s manager: ' + err.message);
+                    return mainMenu();
+                }
+                console.log('Employee\'s manager updated successfully!');
+                mainMenu();
+            });
+        });
+    });
+}
