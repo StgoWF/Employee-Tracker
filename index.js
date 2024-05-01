@@ -91,3 +91,22 @@ function updateEmployeeRole() {
 
 // Initialize the application
 mainMenu();
+
+// Function to add a new department
+function addDepartment() {
+    inquirer.prompt({
+        type: 'input',
+        name: 'deptName',
+        message: 'What is the name of the new department?'
+    }).then(answer => {
+        const query = 'INSERT INTO departments (name) VALUES (?)';
+        db.query(query, [answer.deptName], (err, results) => {
+            if (err) {
+                console.error('Error adding department: ' + err.message);
+                return mainMenu();
+            }
+            console.log('Added new department successfully!');
+            mainMenu();
+        });
+    });
+}
