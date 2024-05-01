@@ -122,3 +122,52 @@ function viewDepartments() {
         mainMenu();
     });
 }
+
+// Function to add a new employee
+function addEmployee() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'firstName',
+            message: 'What is the first name of the employee?'
+        },
+        {
+            type: 'input',
+            name: 'lastName',
+            message: 'What is the last name of the employee?'
+        },
+        {
+            type: 'input',
+            name: 'roleId',
+            message: 'What is the role ID for this employee?'
+        },
+        {
+            type: 'input',
+            name: 'managerId',
+            message: 'What is the manager ID for this employee? (Enter NULL if no manager)'
+        }
+    ]).then(answer => {
+        const query = 'INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
+        db.query(query, [answer.firstName, answer.lastName, answer.roleId, answer.managerId], (err, results) => {
+            if (err) {
+                console.error('Error adding employee: ' + err.message);
+                return mainMenu();
+            }
+            console.log('Added new employee successfully!');
+            mainMenu();
+        });
+    });
+}
+// Function to view all employees
+function viewEmployees() {
+    const query = 'SELECT * FROM employees';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching employees: ' + err.message);
+            return mainMenu();
+        }
+        console.table(results);
+        mainMenu();
+    });
+}
+
