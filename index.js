@@ -171,3 +171,59 @@ function viewEmployees() {
     });
 }
 
+// Function to update an employee's role
+function updateEmployeeRole() {
+    // Query the database to fetch all employees
+    db.query('SELECT id, first_name, last_name FROM employees', (err, employees) => {
+        if (err) {
+            console.error('Error fetching employees: ' + err.message); // Log any errors if the query fails
+            return mainMenu(); // Return to main menu if there's an error
+        }
+        // Map fetched employees to format suitable for inquirer choices
+        const employeeChoices = employees.map(emp => ({
+            name: `${emp.first_name} ${emp.last_name}`,
+            value: emp.id
+        }));
+
+        // Prompt user to select an employee whose role is to be updated
+        inquirer.prompt({
+            type: 'list',
+            name: 'employeeId',
+            message: 'Which employee\'s role would you like to update?',
+            choices: employeeChoices
+        }).then(answer => {
+            // Query the database to fetch all roles
+            db.query('SELECT id, title FROM roles', (err, roles) => {
+                if (err) {
+                    console.error('Error fetching roles: ' + err.message); // Log any errors if the query fails
+                    return mainMenu(); // Return to main menu if there's an error
+                }
+                // Map fetched roles to format suitable for inquirer choices
+                const roleChoices = roles.map(role => ({
+                    name: role.title,
+                    value: role.id
+                }));
+
+                // Prompt user to select a new role for the chosen employee
+                inquirer.prompt({
+                    type: 'list',
+                    name: 'roleId',
+                    message: 'Which role do you want to assign to the selected employee?',
+                    choices: roleChoices
+                }).then(roleAnswer => {
+                    // Update the employee's role in the database
+                    const query = 'UPDATE employees SET role_id = ? WHERE id = ?';
+                    db.query(query, [roleAnswer.roleId, answer.employeeId], (err, result) => {
+                        if (err) {
+                            console.error('Error updating employee role: ' + err.message); // Log any errors if the update fails
+                            return mainMenu(); // Return to main menu if there's an error
+                        }
+                        console.log('Employee role updated successfully!'); // Confirm successful update
+                        mainMenu(); // Return to main menu
+                    });
+                });
+            });
+        });
+    });
+}
+
