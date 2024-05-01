@@ -110,3 +110,15 @@ function addDepartment() {
         });
     });
 }
+// Function to view all departments
+function viewDepartments() {
+    const query = 'SELECT * FROM departments';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching departments: ' + err.message);
+            return mainMenu();
+        }
+        console.table(results);
+        mainMenu();
+    });
+}
