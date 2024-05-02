@@ -1,6 +1,6 @@
 // Import necessary modules
 const inquirer = require('inquirer');
-const db = require('./db/database');
+const db = require('./db/connection');
 
 // Main menu function
 function mainMenu() {
@@ -53,45 +53,6 @@ function mainMenu() {
     });
 }
 
-// Placeholder functions for each menu item
-function viewDepartments() {
-    console.log('Function to view all departments');
-    // Implement SQL query to fetch and display departments
-}
-
-function viewRoles() {
-    console.log('Function to view all roles');
-    // Implement SQL query to fetch and display roles
-}
-
-function viewEmployees() {
-    console.log('Function to view all employees');
-    // Implement SQL query to fetch and display employees
-}
-
-function addDepartment() {
-    console.log('Function to add a department');
-    // Implement prompt and SQL query to add a new department
-}
-
-function addRole() {
-    console.log('Function to add a role');
-    // Implement prompt and SQL query to add a new role
-}
-
-function addEmployee() {
-    console.log('Function to add an employee');
-    // Implement prompt and SQL query to add a new employee
-}
-
-function updateEmployeeRole() {
-    console.log('Function to update an employee role');
-    // Implement prompt and SQL query to update an employee's role
-}
-
-// Initialize the application
-mainMenu();
-
 // Function to add a new department
 function addDepartment() {
     inquirer.prompt({
@@ -110,6 +71,7 @@ function addDepartment() {
         });
     });
 }
+
 // Function to view all departments
 function viewDepartments() {
     const query = 'SELECT * FROM departments';
@@ -158,6 +120,7 @@ function addEmployee() {
         });
     });
 }
+
 // Function to view all employees
 function viewEmployees() {
     const query = 'SELECT * FROM employees';
@@ -227,44 +190,5 @@ function updateEmployeeRole() {
     });
 }
 
-// Function to update an employee's manager
-function updateEmployeeManager() {
-    // Fetch all employees to choose which one to update
-    db.query('SELECT id, first_name, last_name FROM employees', (err, employees) => {
-        if (err) {
-            console.error('Error fetching employees: ' + err.message);
-            return mainMenu();
-        }
-        const employeeChoices = employees.map(emp => ({
-            name: `${emp.first_name} ${emp.last_name}`,
-            value: emp.id
-        }));
-
-        // Prompt user to choose an employee to update their manager
-        inquirer.prompt([
-            {
-                type: 'list',
-                name: 'employeeId',
-                message: 'Select the employee whose manager you want to update:',
-                choices: employeeChoices
-            },
-            {
-                type: 'list',
-                name: 'managerId',
-                message: 'Select the new manager for the employee:',
-                choices: employeeChoices.filter(emp => emp.value !== employeeId)
-            }
-        ]).then(answers => {
-            // Update the manager in the database
-            const query = 'UPDATE employees SET manager_id = ? WHERE id = ?';
-            db.query(query, [answers.managerId, answers.employeeId], (err, result) => {
-                if (err) {
-                    console.error('Error updating employee\'s manager: ' + err.message);
-                    return mainMenu();
-                }
-                console.log('Employee\'s manager updated successfully!');
-                mainMenu();
-            });
-        });
-    });
-}
+// Initialize the application
+mainMenu();

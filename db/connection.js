@@ -1,24 +1,19 @@
-// Import the mysql2 package to use MySQL features in Node.js
 const mysql = require('mysql2');
 
-// Create a connection object with the MySQL database details
+// Establece una conexión persistente
 const db = mysql.createConnection({
-    host: 'localhost', // The hostname of the database server, or IP address if not local
-    user: 'stgowf', // The username for database access
-    password: 'Stgo1245', // The password for the database user
-    database: 'employee_tracker' // The name of the database to connect to
+    host: 'localhost',
+    user: 'stgowf',
+    password: 'Stgo1245',
+    database: 'employee_tracker'
 });
 
-// Attempt to connect to the database
 db.connect(err => {
     if (err) {
-        // If there is an error in connection, log it to the console
-        console.error('Error connecting: ' + err.stack);
+        console.error('Error connecting to the database: ' + err.message);
         return;
     }
-    // If connection is successful, log the connection ID
-    console.log('Connected as id ' + db.threadId);
+    console.log('Connected to the database with id ' + db.threadId);
 });
 
-// Export the connection object so it can be used elsewhere in the application
 module.exports = db;
