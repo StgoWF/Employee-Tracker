@@ -97,6 +97,36 @@ function viewRoles() {
     });
 }
 
+function addRole() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'title',
+            message: 'What is the title of the new role?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary for this role?'
+        },
+        {
+            type: 'input',
+            name: 'departmentId',
+            message: 'What is the department ID for this role?'
+        }
+    ]).then(answer => {
+        const query = 'INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)';
+        db.query(query, [answer.title, answer.salary, answer.departmentId], (err, results) => {
+            if (err) {
+                console.error('Error adding role: ' + err.message);
+                return mainMenu();
+            }
+            console.log('Added new role successfully!');
+            mainMenu();
+        });
+    });
+}
+
 
 // Function to add a new employee
 function addEmployee() {
