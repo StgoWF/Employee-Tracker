@@ -1,4 +1,5 @@
 # Employee Tracker
+![License](https://img.shields.io/badge/license-MIT-green)
 
 ## Description
 Employee Tracker is a command-line application that allows business owners to manage their company's departments, roles, and employee information. This system is designed to be simple to use, allowing users to easily interact with information stored in a MySQL database through a series of prompts and commands.
@@ -52,3 +53,10 @@ The code for this application can be found in [this GitHub repository](https://g
 
 ## Video Walkthrough
 For a demonstration of the application's functionality, please watch this [video walkthrough](https://drive.google.com/file/d/1jUzZKvRlQIrru9eSWkk7R8Fb4wIJOtx9/view).
+
+
+## Contributing
+If you wish to contribute to this project, please fork the repository and submit a pull request with your suggested changes.
+
+## License
+This project is licensed under the terms of the MIT license.
