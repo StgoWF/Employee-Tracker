@@ -1,19 +1,14 @@
 {
   "name": "employee-tracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple employee tracker application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-   
-    
-
+    "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "inquirer": "^8.2.4",
-    "mysql2": "^3.9.7"
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "inquirer": "^8.2.4"
   }
 }

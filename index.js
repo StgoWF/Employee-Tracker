@@ -84,6 +84,19 @@ function viewDepartments() {
         mainMenu();
     });
 }
+// Function to view all roles
+function viewRoles() {
+    const query = 'SELECT * FROM roles';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching roles: ' + err.message);
+            return mainMenu();
+        }
+        console.table(results);
+        mainMenu();
+    });
+}
+
 
 // Function to add a new employee
 function addEmployee() {
