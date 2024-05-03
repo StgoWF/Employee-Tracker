@@ -41,12 +41,7 @@ To run the application, navigate to the root directory of the project and run:
 
 Follow the on-screen prompts to view, add, or update information within your company's database.
 
-## Features
-- View all departments, roles, and employees
-- Add new departments, roles, and employees to the database
-- Update existing employee roles
-- Organize and plan business operations based on staff structure and salary budget
-- Interactive command-line interface that makes database management straightforward and accessible
+
    
 ## Repository
 The code for this application can be found in [this GitHub repository](https://github.com/StgoWF/Employee-Tracker).
