@@ -1,6 +1,5 @@
 const mysql = require('mysql2');
 
-// Establece una conexión persistente
 const db = mysql.createConnection({
     host: '127.0.0.1',
     user: 'stgowf',
